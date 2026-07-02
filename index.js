@@ -2,7 +2,7 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/fireba
 import { getDatabase } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js"
 
 const firebaseConfig = {
-    databaseURL: "https://console.firebase.google.com/u/0/project/leads-tracker-a24bb/database/leads-tracker-a24bb-default-rtdb/data/~2F"
+    databaseURL: "https://leads-tracker-a24bb-default-rtdb.firebaseio.com/"
 }
     
 const app = initializeApp(firebaseConfig)
