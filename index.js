@@ -1,8 +1,12 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js"
+import { getDatabase } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js"
 
-const firebaseConfig = {}
-
+const firebaseConfig = {
+    databaseURL: "https://console.firebase.google.com/u/0/project/leads-tracker-a24bb/database/leads-tracker-a24bb-default-rtdb/data/~2F"
+}
+    
 const app = initializeApp(firebaseConfig)
+const database = getDatabase(app)
 console.log(app)
 
 let myLeads = []
