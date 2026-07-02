@@ -7,7 +7,7 @@ const firebaseConfig = {
     
 const app = initializeApp(firebaseConfig)
 const database = getDatabase(app)
-console.log(app)
+console.log(database)
 
 let myLeads = []
 const inputEl = document.getElementById("input-el")
