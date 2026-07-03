@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "version": "2.0",
-    "name": "Susan's Links Linst",
+    "name": "Susan's Links List",
     "action": {
         "default_popup": "index.html",
         "default_icon": "icon.png"
