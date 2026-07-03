@@ -11,7 +11,7 @@ const firebaseConfig = {
     
 const app = initializeApp(firebaseConfig)
 const database = getDatabase(app)
-const referenceInDB = ref(database, "leads")
+const referenceInDB = ref(database, "links")
 
 const inputEl = document.getElementById("input-el")
 const inputBtn = document.getElementById("input-btn")
