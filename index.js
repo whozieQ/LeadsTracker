@@ -1,5 +1,9 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js"
-import { getDatabase } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js"
+import { getDatabase,
+        ref,
+        push,
+        onValue,
+        remove } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-database.js"
 
 const firebaseConfig = {
     databaseURL: "https://leads-tracker-a24bb-default-rtdb.firebaseio.com/"
@@ -7,31 +11,18 @@ const firebaseConfig = {
     
 const app = initializeApp(firebaseConfig)
 const database = getDatabase(app)
-console.log(database)
+const referenceInDB = ref(database, "leads")
 
-let myLeads = []
 const inputEl = document.getElementById("input-el")
 const inputBtn = document.getElementById("input-btn")
 const ulEl = document.getElementById("ul-el")
 const deleteBtn = document.getElementById("delete-btn")
-const leadsFromLocalStorage = JSON.parse( localStorage.getItem("myLeads") )
-const tabBtn = document.getElementById("tab-btn")
 
-if (leadsFromLocalStorage) {
-    myLeads = leadsFromLocalStorage
-    render(myLeads)
-}
 
-tabBtn.addEventListener("click", function(){
-    chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-        saveLead(tabs[0].url)    
-    })
 
-})
+
 function saveLead(lead){
-    myLeads.push(lead)
-    localStorage.setItem("myLeads", JSON.stringify(myLeads) )
-    render(myLeads)
+    push(referenceInDB, lead)
 }
 
 function render(arrayList) {
@@ -48,14 +39,22 @@ function render(arrayList) {
     ulEl.innerHTML = listItems
 }
 
+onValue(referenceInDB, function(snapshot) {
+    if(!snapshot.exists()) {
+        ulEl.innerHTML = "<p>No leads saved yet.</p>"
+    }
+    else {
+        const snapshotValues = snapshot.val()
+        const myLeads = Object.values(snapshotValues)
+        render(myLeads)
+    }
+})
+
 deleteBtn.addEventListener("dblclick", function() {
-    localStorage.clear()
-    myLeads = []
-    render(myLeads)
+    remove(referenceInDB)
 })
 
 inputBtn.addEventListener("click", function() {
     saveLead(inputEl.value)
     inputEl.value = ""
-
 })
